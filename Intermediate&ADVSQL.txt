@@ -1,0 +1,83 @@
+-- Limit the number of rows returned
+SELECT 
+  TOP (50) points 
+FROM 
+  eurovision;	
+
+-- Return unique countries and use an alias
+SELECT 
+ DISTINCT country AS unique_country 
+FROM 
+  eurovision;
+
+-- Select country and event_year from eurovision
+Select 
+  country, 
+   event_year
+from 
+  eurovision;
+
+-- Return all columns, restricting the percent of rows returned
+SELECT 
+  TOP (50) PERCENT * 
+FROM 
+  eurovision;
+
+-- Select the first 5 rows from the specified columns
+SELECT 
+  TOP (5) description, 
+  event_date 
+FROM 
+  grid 
+  -- Order your results by the event_date column
+ORDER BY 
+  event_date;
+
+SELECT 
+  TOP (20) description,
+ nerc_region,
+  event_date
+FROM 
+  grid 
+  -- Order by nerc_region, affected_customers & event_date
+  -- Event_date should be in descending order
+ORDER BY
+  nerc_region,
+  affected_customers,
+  event_date DESC;
+
+-- Avg,min,max
+SELECT 
+       AVG(DurationSeconds) AS Average, 
+       MIN(DurationSeconds) AS Minimum, 
+       MAX(DurationSeconds) AS Maximum
+FROM Incidents;
+
+-- Calculate the aggregations by Shape
+SELECT Shape,
+       AVG(DurationSeconds) AS Average, 
+       MIN(DurationSeconds) AS Minimum, 
+       MAX(DurationSeconds) AS Maximum
+FROM Incidents
+GROUP BY Shape
+-- condition
+Having MIN(DurationSeconds) > 1;
+
+-- Return the specified columns
+Select 
+IncidentDateTime,
+IncidentState
+FROM Incidents
+-- Exclude all the missing values from IncidentState  
+WHERE IncidentState IS NOT NULL;
+
+-- Check the IncidentState column for missing values and replace them with the City column
+SELECT IncidentState, ISNULL(IncidentState, City) AS Location
+FROM Incidents
+-- Filter to only return missing values from IncidentState
+WHERE IncidentState IS NULL
+
+-- Replace missing values
+SELECT Country, COALESCE(Country, IncidentState, City) AS Location
+FROM Incidents
+WHERE Country IS NULL
