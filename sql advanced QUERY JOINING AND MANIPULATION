@@ -25,3 +25,5 @@ group by challenge_id) ss on cha.challenge_id = ss.challenge_id
                 sum(total_views)!=0 or
                 sum(total_unique_views)!=0
             order by contest_id;
+
+# sOURCE: https://www.codingbroz.com/interviews-sql-solution/
